@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="repositorylist_item_size">120dp</dimen>
+    <dimen name="repositorylist_repository_pgb_size">30dp</dimen>
+    <dimen name="repositorylist_search_cancel_size">20dp</dimen>
+    <dimen name="repositorylist_search_padding_right">36dp</dimen>
+
+</resources>

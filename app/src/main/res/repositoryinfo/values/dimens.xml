@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="repositoryinfo_item_size">60dp</dimen>
+    <dimen name="repositoryinfo_contributor_pgb_size">30dp</dimen>
+
+</resources>

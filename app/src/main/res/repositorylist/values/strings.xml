@@ -1,0 +1,9 @@
+<resources>
+    <string name="repositorylist_title">GitHub Lister</string>
+    <string name="repositorylist_item_owner">by %s</string>
+    <string name="repositorylist_error_repositories">Sorry! Failed to load repositories.</string>
+    <string name="repositorylist_button_retry">Retry</string>
+    <string name="repositorylist_search">Search</string>
+    <string name="repositorylist_search_hints">Search</string>
+    <string name="repositorylist_search_query">Search: %s</string>
+</resources>

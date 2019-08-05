@@ -1,0 +1,13 @@
+<resources>
+    <string name="repositoryinfo_title">Repository Info</string>
+    <string name="repositoryinfo_title_name">Name</string>
+    <string name="repositoryinfo_title_description">Description</string>
+    <string name="repositoryinfo_title_owner">Owner</string>
+    <string name="repositoryinfo_title_fork">Fork</string>
+    <string name="repositoryinfo_value_fork_yes">Yes</string>
+    <string name="repositoryinfo_value_fork_no">No</string>
+    <string name="repositoryinfo_title_contributors">Contributors</string>
+    <string name="repositoryinfo_countribution_count">%d contributions</string>
+    <string name="repositoryinfo_no_contributors">No contributors.</string>
+    <string name="repositoryinfo_error_contributors">Sorry! Failed to load contributors.</string>
+</resources>
