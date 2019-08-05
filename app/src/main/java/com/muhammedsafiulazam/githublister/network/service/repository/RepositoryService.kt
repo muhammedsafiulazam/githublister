@@ -1,6 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.service.repository
 
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.event.Event
 import com.muhammedsafiulazam.githublister.network.event.repository.RepositoryEventType
 import com.muhammedsafiulazam.githublister.network.model.Error
@@ -22,13 +22,13 @@ class RepositoryService : IRepositoryService {
      */
     override fun getRepositories(since: Int?) {
         // Server manager.
-        val serverManager: IServerManager = MainApplication.getInstance().getServerManager()
+        val serverManager: IServerManager = Knowledge.getServerManager()
 
         // Service call.
         val call: Call<List<Repository>> = serverManager.getRepositoryServer().getRepositories(since)
 
         // Queue manager.
-        MainApplication.getInstance().getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
+        Knowledge.getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
             var repositories: List<Repository>? = null
             var error: Error? = null
 
@@ -39,7 +39,7 @@ class RepositoryService : IRepositoryService {
             }
 
             val event: Event = Event(RepositoryEventType.GET_REPOSITORIES, repositories, error)
-            MainApplication.getInstance().getEventManager().send(event)
+            Knowledge.getEventManager().send(event)
         })
     }
 
@@ -50,13 +50,13 @@ class RepositoryService : IRepositoryService {
      */
     override fun searchRepositories(query: String?, page: Int?) {
         // Server manager.
-        val serverManager: IServerManager = MainApplication.getInstance().getServerManager()
+        val serverManager: IServerManager = Knowledge.getServerManager()
 
         // Service call.
         val call: Call<Search> = serverManager.getRepositoryServer().searchRepositories(query, page)
 
         // Queue manager.
-        MainApplication.getInstance().getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
+        Knowledge.getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
             var repositories: List<Repository>? = null
             var error: Error? = null
 
@@ -67,7 +67,7 @@ class RepositoryService : IRepositoryService {
             }
 
             val event: Event = Event(RepositoryEventType.SEARCH_REPOSITORIES, repositories, error)
-            MainApplication.getInstance().getEventManager().send(event)
+            Knowledge.getEventManager().send(event)
         })
     }
 }

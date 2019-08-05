@@ -1,7 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.model.repository
 
 import android.os.Parcelable
-import com.muhammedsafiulazam.githublister.network.model.repository.Repository
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 

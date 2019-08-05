@@ -1,6 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.server.contributor
 
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
@@ -13,7 +13,7 @@ class ContributorServer {
          * @return contributor server
          */
         fun getContributorServer() : IContributorServer {
-            return MainApplication.getInstance().getRetrofitManager().getRetrofit().create(IContributorServer::class.java)
+            return Knowledge.getRetrofitManager().getRetrofit().create(IContributorServer::class.java)
         }
     }
 }

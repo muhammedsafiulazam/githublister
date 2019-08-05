@@ -1,7 +1,7 @@
 package com.muhammedsafiulazam.githublister.feature.repositoryinfo
 
 import android.text.TextUtils
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivityModel
 import com.muhammedsafiulazam.githublister.event.Event
@@ -29,7 +29,7 @@ class RepositoryInfoActivityModel : BaseActivityModel() {
 
         // Call for contributors.
         var repository: Repository? = getActivity()?.getData() as Repository
-        MainApplication.getInstance().getServiceManager().getContributorService().getContributors(repository?.fullname!!)
+        Knowledge.getServiceManager().getContributorService().getContributors(repository?.fullname!!)
     }
 
     override fun onStartActivity() {
@@ -43,28 +43,28 @@ class RepositoryInfoActivityModel : BaseActivityModel() {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = MainApplication.getInstance().getEventManager().subscribe( callback = { event : Event -> Unit
+        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        MainApplication.getInstance().getEventManager().unsubscribe(mReceiveChannel)
+       Knowledge.getEventManager().unsubscribe(mReceiveChannel)
     }
 
     private fun loadDataBusy(busy: Boolean) {
         val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_BUSY, busy, null)
-        MainApplication.getInstance().getEventManager().send(event)
+        Knowledge.getEventManager().send(event)
     }
 
     private fun loadDataError(error: String?) {
         val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_ERROR, error, null)
-        MainApplication.getInstance().getEventManager().send(event)
+        Knowledge.getEventManager().send(event)
     }
 
     private fun loadDataResponse(response: List<Contributor>) {
         val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_RESPONSE, response, null)
-        MainApplication.getInstance().getEventManager().send(event)
+        Knowledge.getEventManager().send(event)
     }
 
     fun onReceiveEvents(event: Event) {

@@ -1,6 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.server.repository
 
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
@@ -13,7 +13,7 @@ class RepositoryServer {
          * @return repository server
          */
         fun getRepositoryServer() : IRepositoryServer {
-            return MainApplication.getInstance().getRetrofitManager().getRetrofit().create(IRepositoryServer::class.java)
+            return Knowledge.getRetrofitManager().getRetrofit().create(IRepositoryServer::class.java)
         }
     }
 }

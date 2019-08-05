@@ -1,6 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.service.contributor
 
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.event.Event
 import com.muhammedsafiulazam.githublister.network.event.contributor.ContributorEventType
 import com.muhammedsafiulazam.githublister.network.model.Error
@@ -20,13 +20,13 @@ class ContributorService : IContributorService {
      */
     override fun getContributors(repository: String) {
         // Server manager.
-        val serverManager: IServerManager = MainApplication.getInstance().getServerManager()
+        val serverManager: IServerManager = Knowledge.getServerManager()
 
         // Service call.
         val call: Call<List<Contributor>> = serverManager.getContributorServer().getContributors(repository)
 
         // Queue manager.
-        MainApplication.getInstance().getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
+        Knowledge.getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
             var contributors: List<Contributor>? = null
             var error: Error? = null
 
@@ -37,7 +37,7 @@ class ContributorService : IContributorService {
             }
 
             val event: Event = Event(ContributorEventType.GET_CONTRIBUTORS, contributors, error)
-            MainApplication.getInstance().getEventManager().send(event)
+            Knowledge.getEventManager().send(event)
         })
     }
 }

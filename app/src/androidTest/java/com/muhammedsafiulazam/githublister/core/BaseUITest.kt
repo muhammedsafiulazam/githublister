@@ -6,11 +6,10 @@ import android.content.res.Resources
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.MainApplication
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
 import com.muhammedsafiulazam.githublister.event.Event
-import com.muhammedsafiulazam.githublister.feature.repositoryinfo.RepositoryInfoActivity
-import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.channels.ReceiveChannel
 import org.junit.Assert
@@ -43,7 +42,7 @@ open class BaseUITest {
     }
 
     init {
-        mReceiveChannel = MainApplication.getInstance().getEventManager().subscribe(callback = { event: Event -> Unit
+        mReceiveChannel = Knowledge.getEventManager().subscribe(callback = { event: Event -> Unit
             onReceiveEvent(event)
         })
     }

@@ -1,7 +1,7 @@
 package com.muhammedsafiulazam.githublister.launch
 
 import android.os.Bundle
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
 import com.muhammedsafiulazam.githublister.feature.repositorylist.RepositoryListActivity
@@ -20,7 +20,7 @@ class LaunchActivity : BaseActivity() {
         super.onStart()
 
         // Entry activity.
-        MainApplication.getInstance().getActivityManager().loadActivity(RepositoryListActivity::class.java)
+        Knowledge.getActivityManager().loadActivity(RepositoryListActivity::class.java)
     }
 
     override fun onStop() {

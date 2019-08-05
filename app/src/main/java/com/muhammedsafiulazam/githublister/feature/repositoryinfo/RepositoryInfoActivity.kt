@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
 import com.muhammedsafiulazam.githublister.event.Event
@@ -57,13 +57,13 @@ class RepositoryInfoActivity : BaseActivity() {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = MainApplication.getInstance().getEventManager().subscribe( callback = { event : Event -> Unit
+        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        MainApplication.getInstance().getEventManager().unsubscribe(mReceiveChannel)
+       Knowledge.getEventManager().unsubscribe(mReceiveChannel)
     }
 
     fun updateLoader(show: Boolean) {

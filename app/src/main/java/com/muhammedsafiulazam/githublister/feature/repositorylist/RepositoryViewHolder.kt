@@ -1,15 +1,15 @@
 package com.muhammedsafiulazam.githublister.feature.repositorylist
 
 import android.text.TextUtils
-import androidx.appcompat.widget.AppCompatTextView
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.network.model.repository.Repository
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

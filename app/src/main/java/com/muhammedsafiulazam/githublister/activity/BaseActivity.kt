@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
@@ -47,13 +47,13 @@ open class BaseActivity : AppCompatActivity() {
         }
 
         mActivityModel?.onStartActivity()
-        MainApplication.getInstance().getActivityManager().onStartActivity(this)
+        Knowledge.getActivityManager().onStartActivity(this)
     }
 
     override fun onStop() {
         super.onStop()
         mActivityModel?.onStopActivity()
-        MainApplication.getInstance().getActivityManager().onStopActivity(this)
+        Knowledge.getActivityManager().onStopActivity(this)
     }
 
     override fun onDestroy() {

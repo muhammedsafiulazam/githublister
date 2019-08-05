@@ -11,7 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.muhammedsafiulazam.githublister.MainApplication
+import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
 import com.muhammedsafiulazam.githublister.event.Event
@@ -124,13 +124,13 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = MainApplication.getInstance().getEventManager().subscribe( callback = { event : Event -> Unit
+        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        MainApplication.getInstance().getEventManager().unsubscribe(mReceiveChannel)
+        Knowledge.getEventManager().unsubscribe(mReceiveChannel)
     }
 
     fun updateLoader(show: Boolean) {
@@ -182,7 +182,7 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
 
     private fun loadRepositories(query: String = this.mQuery) {
         val event: Event = Event(RepositoryListEventType.LOAD_DATA_REQUEST, query, null)
-        MainApplication.getInstance().getEventManager().send(event)
+        Knowledge.getEventManager().send(event)
     }
 
     fun onReceiveEvents(event: Event) {
@@ -199,7 +199,7 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
     }
 
     override fun onClickRepository(repository: Repository) {
-        MainApplication.getInstance().getActivityManager().loadActivity(RepositoryInfoActivity::class.java, repository)
+        Knowledge.getActivityManager().loadActivity(RepositoryInfoActivity::class.java, repository)
     }
 
     private fun onClickRetry() {
