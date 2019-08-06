@@ -1,14 +1,16 @@
 package com.muhammedsafiulazam.githublister.feature.repositoryinfo
 
 import android.text.TextUtils
-import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivityModel
+import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
+import com.muhammedsafiulazam.githublister.event.IEventManager
 import com.muhammedsafiulazam.githublister.feature.repositoryinfo.event.RepositoryInfoEventType
 import com.muhammedsafiulazam.githublister.network.event.contributor.ContributorEventType
 import com.muhammedsafiulazam.githublister.network.model.contributor.Contributor
 import com.muhammedsafiulazam.githublister.network.model.repository.Repository
+import com.muhammedsafiulazam.githublister.network.service.IServiceManager
 import kotlinx.coroutines.channels.ReceiveChannel
 
 /**
@@ -29,7 +31,8 @@ class RepositoryInfoActivityModel : BaseActivityModel() {
 
         // Call for contributors.
         var repository: Repository? = getActivity()?.getData() as Repository
-        Knowledge.getServiceManager().getContributorService().getContributors(repository?.fullname!!)
+        val serviceManager: IServiceManager = getAddOn(AddOnType.SERVICE_MANAGER) as IServiceManager
+        serviceManager.getContributorService()?.getContributors(repository?.fullname!!)
     }
 
     override fun onStartActivity() {
@@ -43,28 +46,33 @@ class RepositoryInfoActivityModel : BaseActivityModel() {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-       Knowledge.getEventManager().unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+       eventManager.unsubscribe(mReceiveChannel)
     }
 
     private fun loadDataBusy(busy: Boolean) {
-        val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_BUSY, busy, null)
-        Knowledge.getEventManager().send(event)
+        val event = Event(RepositoryInfoEventType.LOAD_DATA_BUSY, busy, null)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     private fun loadDataError(error: String?) {
-        val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_ERROR, error, null)
-        Knowledge.getEventManager().send(event)
+        val event = Event(RepositoryInfoEventType.LOAD_DATA_ERROR, error, null)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     private fun loadDataResponse(response: List<Contributor>) {
-        val event: Event = Event(RepositoryInfoEventType.LOAD_DATA_RESPONSE, response, null)
-        Knowledge.getEventManager().send(event)
+        val event = Event(RepositoryInfoEventType.LOAD_DATA_RESPONSE, response, null)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     fun onReceiveEvents(event: Event) {

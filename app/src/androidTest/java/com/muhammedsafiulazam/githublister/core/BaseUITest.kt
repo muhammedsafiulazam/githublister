@@ -6,10 +6,11 @@ import android.content.res.Resources
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
-import com.muhammedsafiulazam.githublister.Knowledge
-import com.muhammedsafiulazam.githublister.MainApplication
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
+import com.muhammedsafiulazam.githublister.addon.AddOnManager
+import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
+import com.muhammedsafiulazam.githublister.event.IEventManager
 import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.channels.ReceiveChannel
 import org.junit.Assert
@@ -32,6 +33,7 @@ open class BaseUITest {
 
     private var mCountDownLatch: CountDownLatch? = null
     private var mReceiveChannel: ReceiveChannel<Event>? = null
+    private var mEventManager: IEventManager? = null
 
     private val mContext: Context by lazy {
         InstrumentationRegistry.getInstrumentation().getTargetContext()
@@ -42,7 +44,7 @@ open class BaseUITest {
     }
 
     init {
-        mReceiveChannel = Knowledge.getEventManager().subscribe(callback = { event: Event -> Unit
+        mReceiveChannel = getEventManager()?.subscribe(callback = { event: Event -> Unit
             onReceiveEvent(event)
         })
     }
@@ -53,6 +55,13 @@ open class BaseUITest {
 
     fun getResources() : Resources {
         return mResources
+    }
+
+    private fun getEventManager() : IEventManager? {
+        if (mEventManager == null) {
+            mEventManager = AddOnManager.getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        }
+        return mEventManager
     }
 
     fun getActivity(): Activity? {

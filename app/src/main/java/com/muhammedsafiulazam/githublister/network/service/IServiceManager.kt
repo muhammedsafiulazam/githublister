@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.service
 
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 import com.muhammedsafiulazam.githublister.network.service.contributor.IContributorService
 import com.muhammedsafiulazam.githublister.network.service.repository.IRepositoryService
 
@@ -7,7 +8,7 @@ import com.muhammedsafiulazam.githublister.network.service.repository.IRepositor
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IServiceManager {
+interface IServiceManager : IAddOn {
     /**
      * Get repository service.
      * @return repository service

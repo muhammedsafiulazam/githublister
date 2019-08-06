@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.queue
 
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 import retrofit2.Call
 import retrofit2.Response
 
@@ -7,7 +8,7 @@ import retrofit2.Response
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IQueueManager {
+interface IQueueManager : IAddOn {
     /**
      * Execute call and response via callback.
      * @param call execute call

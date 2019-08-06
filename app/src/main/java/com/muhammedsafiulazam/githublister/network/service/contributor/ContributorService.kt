@@ -1,10 +1,13 @@
 package com.muhammedsafiulazam.githublister.network.service.contributor
 
-import com.muhammedsafiulazam.githublister.Knowledge
+import com.muhammedsafiulazam.githublister.addon.AddOn
+import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
+import com.muhammedsafiulazam.githublister.event.IEventManager
 import com.muhammedsafiulazam.githublister.network.event.contributor.ContributorEventType
 import com.muhammedsafiulazam.githublister.network.model.Error
 import com.muhammedsafiulazam.githublister.network.model.contributor.Contributor
+import com.muhammedsafiulazam.githublister.network.queue.IQueueManager
 import com.muhammedsafiulazam.githublister.network.server.IServerManager
 import retrofit2.Call
 import retrofit2.Response
@@ -13,20 +16,23 @@ import retrofit2.Response
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-class ContributorService : IContributorService {
+class ContributorService : AddOn(), IContributorService {
     /**
      * Get contributors.
      * @param repository repository full-name
      */
     override fun getContributors(repository: String) {
         // Server manager.
-        val serverManager: IServerManager = Knowledge.getServerManager()
+        val serverManager: IServerManager = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager
 
         // Service call.
-        val call: Call<List<Contributor>> = serverManager.getContributorServer().getContributors(repository)
+        val call: Call<List<Contributor>> = serverManager.getContributorServer().getContributorCall().getContributors(repository)
 
         // Queue manager.
-        Knowledge.getQueueManager().execute(call as Call<Any>, callback = { response: Response<Any> ->
+        val queueManager: IQueueManager = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager
+
+        // Push in queue.
+        queueManager.execute(call as Call<Any>, callback = { response: Response<Any> ->
             var contributors: List<Contributor>? = null
             var error: Error? = null
 
@@ -37,7 +43,10 @@ class ContributorService : IContributorService {
             }
 
             val event: Event = Event(ContributorEventType.GET_CONTRIBUTORS, contributors, error)
-            Knowledge.getEventManager().send(event)
+
+            // Event manager.
+            val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+            eventManager.send(event)
         })
     }
 }

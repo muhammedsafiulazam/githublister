@@ -1,4 +1,4 @@
-package com.muhammedsafiulazam.githublister
+package com.muhammedsafiulazam.githublister.addon
 
 import android.content.Context
 import android.content.res.Resources
@@ -15,7 +15,7 @@ import com.muhammedsafiulazam.githublister.network.server.ServerManager
 import com.muhammedsafiulazam.githublister.network.service.IServiceManager
 import com.muhammedsafiulazam.githublister.network.service.ServiceManager
 
-object Knowledge {
+object AddOnManager : AddOn(), IAddOn {
 
     // Context.
     private var mContext: Context? = null
@@ -56,6 +56,37 @@ object Knowledge {
      */
     fun initialize(context: Context) {
         mContext = context
+        onInitialize()
+    }
+
+    private fun onInitialize() {
+        // Activity manager.
+        addAddOn(AddOnType.ACTIVITY_MANAGER, mActivityManager)
+
+        // Server manager.
+        addAddOn(AddOnType.SERVER_MANAGER, mServerManager)
+
+        // Service manager.
+        addAddOn(AddOnType.SERVICE_MANAGER, mServiceManager)
+
+        // Event manager.
+        addAddOn(AddOnType.EVENT_MANAGER, mEventManager)
+
+        // Retrofit manager.
+        addAddOn(AddOnType.RETROFIT_MANAGER, mRetrofitManger)
+
+        // Queue manager.
+        addAddOn(AddOnType.QUEUE_MANAGER, mQueueManager)
+
+        // Now assign individually.
+
+        // Service manager.
+        mServiceManager.addAddOn(AddOnType.SERVER_MANAGER, mServerManager)
+        mServiceManager.addAddOn(AddOnType.EVENT_MANAGER, mEventManager)
+        mServiceManager.addAddOn(AddOnType.QUEUE_MANAGER, mQueueManager)
+
+        // Server manager.
+        mServerManager.addAddOn(AddOnType.RETROFIT_MANAGER, mRetrofitManger)
     }
 
     /**
@@ -72,53 +103,5 @@ object Knowledge {
      */
     fun getResources() : Resources {
         return mContext!!.resources
-    }
-
-    /**
-     * Get activity manager.
-     * @return activity manager
-     */
-    fun getActivityManager() : IActivityManager {
-        return mActivityManager
-    }
-
-    /**
-     * Get server manager.
-     * @return server manager
-     */
-    fun getServerManager() : IServerManager {
-        return mServerManager
-    }
-
-    /**
-     * Get service manager.
-     * @return service manager
-     */
-    fun getServiceManager() : IServiceManager {
-        return mServiceManager
-    }
-
-    /**
-     * Get event manager.
-     * @return event manager
-     */
-    fun getEventManager() : IEventManager {
-        return mEventManager
-    }
-
-    /**
-     * Get retrofit manager.
-     * @return retrofit manager
-     */
-    fun getRetrofitManager() : IRetrofitManager {
-        return mRetrofitManger
-    }
-
-    /**
-     * Get queue manager.
-     * @return queue manager
-     */
-    fun getQueueManager() : IQueueManager {
-        return mQueueManager
     }
 }

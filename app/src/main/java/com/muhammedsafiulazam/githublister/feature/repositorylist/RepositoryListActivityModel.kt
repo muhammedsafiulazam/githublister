@@ -1,13 +1,15 @@
 package com.muhammedsafiulazam.githublister.feature.repositorylist
 
 import android.text.TextUtils
-import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivityModel
+import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
+import com.muhammedsafiulazam.githublister.event.IEventManager
 import com.muhammedsafiulazam.githublister.feature.repositorylist.event.RepositoryListEventType
 import com.muhammedsafiulazam.githublister.network.event.repository.RepositoryEventType
 import com.muhammedsafiulazam.githublister.network.model.repository.Repository
+import com.muhammedsafiulazam.githublister.network.service.IServiceManager
 import kotlinx.coroutines.channels.ReceiveChannel
 
 /**
@@ -39,28 +41,33 @@ class RepositoryListActivityModel : BaseActivityModel() {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        Knowledge.getEventManager().unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.unsubscribe(mReceiveChannel)
     }
 
     private fun loadDataBusy(busy: Boolean) {
         val event: Event = Event(RepositoryListEventType.LOAD_DATA_BUSY, busy, null)
-        Knowledge.getEventManager().send(event)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     private fun loadDataError(error: String?) {
         val event: Event = Event(RepositoryListEventType.LOAD_DATA_ERROR, error, null)
-        Knowledge.getEventManager().send(event)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     private fun loadDataResponse(response: Any?) {
         val event: Event = Event(RepositoryListEventType.LOAD_DATA_RESPONSE, response, null)
-        Knowledge.getEventManager().send(event)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.send(event)
     }
 
     fun loadDataRequest(query: String = "") {
@@ -74,10 +81,12 @@ class RepositoryListActivityModel : BaseActivityModel() {
         // Show loader.
         loadDataBusy(true)
 
+        val serviceManager: IServiceManager = getAddOn(AddOnType.SERVICE_MANAGER) as IServiceManager
+
         if (!TextUtils.isEmpty(mQuery)) {
-            Knowledge.getServiceManager().getRepositoryService().searchRepositories(mQuery, mIndex)
+            serviceManager.getRepositoryService()?.searchRepositories(mQuery, mIndex)
         } else {
-            Knowledge.getServiceManager().getRepositoryService().getRepositories(mIndex)
+            serviceManager.getRepositoryService()?.getRepositories(mIndex)
         }
     }
 

@@ -2,12 +2,13 @@ package com.muhammedsafiulazam.githublister.activity
 
 import android.content.Intent
 import android.os.Parcelable
+import com.muhammedsafiulazam.githublister.addon.AddOn
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-class ActivityManager : IActivityManager {
+class ActivityManager : AddOn(), IActivityManager {
     private var mCurrentActivity: BaseActivity? = null
 
     /**

@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.muhammedsafiulazam.githublister.Knowledge
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
+import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
+import com.muhammedsafiulazam.githublister.event.IEventManager
 import com.muhammedsafiulazam.githublister.feature.repositoryinfo.event.RepositoryInfoEventType
 import com.muhammedsafiulazam.githublister.network.model.contributor.Contributor
 import com.muhammedsafiulazam.githublister.network.model.repository.Repository
@@ -57,13 +58,15 @@ class RepositoryInfoActivity : BaseActivity() {
     }
 
     private fun subscribeToEvents() {
-        mReceiveChannel = Knowledge.getEventManager().subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-       Knowledge.getEventManager().unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
+        eventManager.unsubscribe(mReceiveChannel)
     }
 
     fun updateLoader(show: Boolean) {
