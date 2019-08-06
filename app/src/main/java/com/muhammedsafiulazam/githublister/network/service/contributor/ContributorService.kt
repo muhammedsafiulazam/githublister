@@ -23,16 +23,16 @@ class ContributorService : AddOn(), IContributorService {
      */
     override fun getContributors(repository: String) {
         // Server manager.
-        val serverManager: IServerManager = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager
+        val serverManager: IServerManager? = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager?
 
         // Service call.
-        val call: Call<List<Contributor>> = serverManager.getContributorServer().getContributorCall().getContributors(repository)
+        val call: Call<List<Contributor>> = serverManager!!.getContributorServer().getContributorCall().getContributors(repository)
 
         // Queue manager.
-        val queueManager: IQueueManager = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager
+        val queueManager: IQueueManager? = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager?
 
         // Push in queue.
-        queueManager.execute(call as Call<Any>, callback = { response: Response<Any> ->
+        queueManager!!.execute(call as Call<Any>, callback = { response: Response<Any> ->
             var contributors: List<Contributor>? = null
             var error: Error? = null
 
@@ -42,11 +42,11 @@ class ContributorService : AddOn(), IContributorService {
                 error = Error(response.code(), response.errorBody()?.toString())
             }
 
-            val event: Event = Event(ContributorEventType.GET_CONTRIBUTORS, contributors, error)
+            val event = Event(ContributorEventType.GET_CONTRIBUTORS, contributors, error)
 
             // Event manager.
-            val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-            eventManager.send(event)
+            val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+            eventManager!!.send(event)
         })
     }
 }

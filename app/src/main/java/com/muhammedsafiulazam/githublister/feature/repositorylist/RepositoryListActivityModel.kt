@@ -41,33 +41,33 @@ class RepositoryListActivityModel : BaseActivityModel() {
     }
 
     private fun subscribeToEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        mReceiveChannel = eventManager?.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.unsubscribe(mReceiveChannel)
     }
 
     private fun loadDataBusy(busy: Boolean) {
-        val event: Event = Event(RepositoryListEventType.LOAD_DATA_BUSY, busy, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val event = Event(RepositoryListEventType.LOAD_DATA_BUSY, busy, null)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     private fun loadDataError(error: String?) {
-        val event: Event = Event(RepositoryListEventType.LOAD_DATA_ERROR, error, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val event = Event(RepositoryListEventType.LOAD_DATA_ERROR, error, null)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     private fun loadDataResponse(response: Any?) {
-        val event: Event = Event(RepositoryListEventType.LOAD_DATA_RESPONSE, response, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val event = Event(RepositoryListEventType.LOAD_DATA_RESPONSE, response, null)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     fun loadDataRequest(query: String = "") {
@@ -81,12 +81,12 @@ class RepositoryListActivityModel : BaseActivityModel() {
         // Show loader.
         loadDataBusy(true)
 
-        val serviceManager: IServiceManager = getAddOn(AddOnType.SERVICE_MANAGER) as IServiceManager
+        val serviceManager: IServiceManager? = getAddOn(AddOnType.SERVICE_MANAGER) as IServiceManager?
 
         if (!TextUtils.isEmpty(mQuery)) {
-            serviceManager.getRepositoryService()?.searchRepositories(mQuery, mIndex)
+            serviceManager?.getRepositoryService()?.searchRepositories(mQuery, mIndex)
         } else {
-            serviceManager.getRepositoryService()?.getRepositories(mIndex)
+            serviceManager?.getRepositoryService()?.getRepositories(mIndex)
         }
     }
 

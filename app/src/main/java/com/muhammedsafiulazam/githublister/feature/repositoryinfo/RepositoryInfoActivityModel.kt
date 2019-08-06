@@ -46,33 +46,33 @@ class RepositoryInfoActivityModel : BaseActivityModel() {
     }
 
     private fun subscribeToEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        mReceiveChannel = eventManager?.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-       eventManager.unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+       eventManager?.unsubscribe(mReceiveChannel)
     }
 
     private fun loadDataBusy(busy: Boolean) {
         val event = Event(RepositoryInfoEventType.LOAD_DATA_BUSY, busy, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     private fun loadDataError(error: String?) {
         val event = Event(RepositoryInfoEventType.LOAD_DATA_ERROR, error, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     private fun loadDataResponse(response: List<Contributor>) {
         val event = Event(RepositoryInfoEventType.LOAD_DATA_RESPONSE, response, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     fun onReceiveEvents(event: Event) {

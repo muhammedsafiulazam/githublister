@@ -11,8 +11,8 @@ import com.muhammedsafiulazam.githublister.network.retrofit.IRetrofitManager
 class RepositoryServer : AddOn(), IRepositoryServer {
     // Repository calls.
     private val mRepositoryCall : IRepositoryCall by lazy {
-        val retrofitManager: IRetrofitManager = getAddOn(AddOnType.RETROFIT_MANAGER) as IRetrofitManager
-        retrofitManager.getRetrofit().create(IRepositoryCall::class.java)
+        val retrofitManager: IRetrofitManager? = getAddOn(AddOnType.RETROFIT_MANAGER) as IRetrofitManager?
+        retrofitManager!!.getRetrofit().create(IRepositoryCall::class.java)
     }
 
     /**

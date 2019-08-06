@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.muhammedsafiulazam.githublister.R
 import com.muhammedsafiulazam.githublister.activity.BaseActivity
 import com.muhammedsafiulazam.githublister.activity.IActivityManager
-import com.muhammedsafiulazam.githublister.addon.AddOn
 import com.muhammedsafiulazam.githublister.addon.AddOnType
 import com.muhammedsafiulazam.githublister.event.Event
 import com.muhammedsafiulazam.githublister.event.IEventManager
@@ -127,15 +126,15 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
     }
 
     private fun subscribeToEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        mReceiveChannel = eventManager?.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.unsubscribe(mReceiveChannel)
     }
 
     fun updateLoader(show: Boolean) {
@@ -187,8 +186,8 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
 
     private fun loadRepositories(query: String = this.mQuery) {
         val event = Event(RepositoryListEventType.LOAD_DATA_REQUEST, query, null)
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.send(event)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.send(event)
     }
 
     fun onReceiveEvents(event: Event) {
@@ -205,8 +204,8 @@ class RepositoryListActivity : BaseActivity(), IRepositoryListListener {
     }
 
     override fun onClickRepository(repository: Repository) {
-        val activityManager: IActivityManager = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager
-        activityManager.loadActivity(RepositoryInfoActivity::class.java, repository)
+        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
+        activityManager?.loadActivity(RepositoryInfoActivity::class.java, repository)
     }
 
     private fun onClickRetry() {

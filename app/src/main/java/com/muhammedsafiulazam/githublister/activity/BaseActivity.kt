@@ -19,7 +19,6 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
     }
 
     private var mActivityModel: BaseActivityModel? = null
-    private var mActivityManager: IActivityManager? = null
     private val mAddOns: MutableMap<String, IAddOn> = mutableMapOf()
 
     private var isViewReady: Boolean = false
@@ -43,13 +42,15 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
         }
 
         mActivityModel?.onStartActivity()
-        getActivityManager()?.onStartActivity(this)
+        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
+        activityManager?.onStartActivity(this)
     }
 
     override fun onStop() {
         super.onStop()
         mActivityModel?.onStopActivity()
-        getActivityManager()?.onStopActivity(this)
+        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
+        activityManager?.onStopActivity(this)
     }
 
     fun getData() : Parcelable? {
@@ -63,13 +64,6 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
     fun setActivityModel(activityModel: Class<out BaseActivityModel>) {
         mActivityModel = ViewModelProviders.of(this).get(activityModel)
         mActivityModel?.setActivity(this)
-    }
-
-    private fun getActivityManager() : IActivityManager? {
-        if (mActivityManager == null) {
-            mActivityManager = AddOnManager.getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager
-        }
-        return mActivityManager
     }
 
     override fun onDestroy() {

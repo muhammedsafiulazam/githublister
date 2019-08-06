@@ -58,15 +58,15 @@ class RepositoryInfoActivity : BaseActivity() {
     }
 
     private fun subscribeToEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        mReceiveChannel = eventManager.subscribe( callback = { event : Event -> Unit
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        mReceiveChannel = eventManager?.subscribe( callback = { event : Event -> Unit
             onReceiveEvents(event)
         })
     }
 
     private fun unsubscribeFromEvents() {
-        val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        eventManager.unsubscribe(mReceiveChannel)
+        val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        eventManager?.unsubscribe(mReceiveChannel)
     }
 
     fun updateLoader(show: Boolean) {

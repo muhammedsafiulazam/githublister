@@ -33,7 +33,6 @@ open class BaseUITest {
 
     private var mCountDownLatch: CountDownLatch? = null
     private var mReceiveChannel: ReceiveChannel<Event>? = null
-    private var mEventManager: IEventManager? = null
 
     private val mContext: Context by lazy {
         InstrumentationRegistry.getInstrumentation().getTargetContext()
@@ -44,7 +43,8 @@ open class BaseUITest {
     }
 
     init {
-        mReceiveChannel = getEventManager()?.subscribe(callback = { event: Event -> Unit
+        val eventManager: IEventManager? = AddOnManager.getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+        mReceiveChannel = eventManager?.subscribe(callback = { event: Event -> Unit
             onReceiveEvent(event)
         })
     }
@@ -55,13 +55,6 @@ open class BaseUITest {
 
     fun getResources() : Resources {
         return mResources
-    }
-
-    private fun getEventManager() : IEventManager? {
-        if (mEventManager == null) {
-            mEventManager = AddOnManager.getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-        }
-        return mEventManager
     }
 
     fun getActivity(): Activity? {

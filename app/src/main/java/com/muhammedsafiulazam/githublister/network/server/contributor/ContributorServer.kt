@@ -12,8 +12,8 @@ import com.muhammedsafiulazam.githublister.network.retrofit.IRetrofitManager
 class ContributorServer : AddOn(), IContributorServer {
     // Contributor call.
     private val mContributorCall : IContributorCall by lazy {
-        val retrofitManager: IRetrofitManager = getAddOn(AddOnType.RETROFIT_MANAGER) as IRetrofitManager
-        retrofitManager.getRetrofit().create(IContributorCall::class.java)
+        val retrofitManager: IRetrofitManager? = getAddOn(AddOnType.RETROFIT_MANAGER) as IRetrofitManager?
+        retrofitManager!!.getRetrofit().create(IContributorCall::class.java)
     }
 
     /**

@@ -25,16 +25,16 @@ class RepositoryService : AddOn(), IRepositoryService {
      */
     override fun getRepositories(since: Int?) {
         // Server manager.
-        val serverManager: IServerManager = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager
+        val serverManager: IServerManager? = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager?
 
         // Service call.
-        val call: Call<List<Repository>> = serverManager.getRepositoryServer().getRepositoryCall().getRepositories(since)
+        val call: Call<List<Repository>> = serverManager!!.getRepositoryServer().getRepositoryCall().getRepositories(since)
 
         // Queue manager.
-        val queueManager: IQueueManager = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager
+        val queueManager: IQueueManager? = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager?
 
         // Push in queue.
-        queueManager.execute(call as Call<Any>, callback = { response: Response<Any> ->
+        queueManager!!.execute(call as Call<Any>, callback = { response: Response<Any> ->
             var repositories: List<Repository>? = null
             var error: Error? = null
 
@@ -44,11 +44,11 @@ class RepositoryService : AddOn(), IRepositoryService {
                 error = Error(response.code(), response.errorBody()?.toString())
             }
 
-            val event: Event = Event(RepositoryEventType.GET_REPOSITORIES, repositories, error)
+            val event = Event(RepositoryEventType.GET_REPOSITORIES, repositories, error)
 
             // Event manager.
-            val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-            eventManager.send(event)
+            val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+            eventManager!!.send(event)
         })
     }
 
@@ -59,16 +59,16 @@ class RepositoryService : AddOn(), IRepositoryService {
      */
     override fun searchRepositories(query: String?, page: Int?) {
         // Server manager.
-        val serverManager: IServerManager = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager
+        val serverManager: IServerManager? = getAddOn(AddOnType.SERVER_MANAGER) as IServerManager?
 
         // Service call.
-        val call: Call<Search> = serverManager.getRepositoryServer().getRepositoryCall().searchRepositories(query, page)
+        val call: Call<Search> = serverManager!!.getRepositoryServer().getRepositoryCall().searchRepositories(query, page)
 
         // Queue manager.
-        val queueManager: IQueueManager = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager
+        val queueManager: IQueueManager? = getAddOn(AddOnType.QUEUE_MANAGER) as IQueueManager?
 
         // Push in queue.
-        queueManager.execute(call as Call<Any>, callback = { response: Response<Any> ->
+        queueManager!!.execute(call as Call<Any>, callback = { response: Response<Any> ->
             var repositories: List<Repository>? = null
             var error: Error? = null
 
@@ -78,11 +78,11 @@ class RepositoryService : AddOn(), IRepositoryService {
                 error = Error(response.code(), response.errorBody()?.toString())
             }
 
-            val event: Event = Event(RepositoryEventType.SEARCH_REPOSITORIES, repositories, error)
+            val event = Event(RepositoryEventType.SEARCH_REPOSITORIES, repositories, error)
 
             // Event manager.
-            val eventManager: IEventManager = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager
-            eventManager.send(event)
+            val eventManager: IEventManager? = getAddOn(AddOnType.EVENT_MANAGER) as IEventManager?
+            eventManager!!.send(event)
         })
     }
 }
