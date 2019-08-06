@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.event
 
+import com.muhammedsafiulazam.githublister.addon.AddOn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.launch
@@ -9,7 +10,7 @@ import kotlin.coroutines.CoroutineContext
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-class EventManager : IEventManager {
+class EventManager : AddOn(), IEventManager {
     protected val mChannel = BroadcastChannel<Any>(Channel.CONFLATED)
 
     /**

@@ -1,20 +1,16 @@
 package com.muhammedsafiulazam.githublister.network.server.contributor
 
-import com.muhammedsafiulazam.githublister.network.model.contributor.Contributor
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IContributorServer {
+interface IContributorServer : IAddOn {
+
     /**
-     * Get contributors.
-     * @param repository repository full-name
-     * @return list of contributors
+     * Get contributor call.
+     * @return contributor call
      */
-    @GET("repos/{fullname}/contributors")
-    fun getContributors(@Path("fullname", encoded = true) repository: String?) : Call<List<Contributor>>
+    fun getContributorCall() : IContributorCall
 }

@@ -1,12 +1,13 @@
 package com.muhammedsafiulazam.githublister.activity
 
 import android.os.Parcelable
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IActivityManager {
+interface IActivityManager : IAddOn {
     /**
      * Get current activity.
      * @return current activity

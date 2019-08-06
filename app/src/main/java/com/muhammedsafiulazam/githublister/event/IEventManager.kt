@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.event
 
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlin.coroutines.CoroutineContext
@@ -8,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IEventManager {
+interface IEventManager : IAddOn {
     /**
      * Send event.
      * @param event sent event

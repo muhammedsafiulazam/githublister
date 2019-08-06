@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.queue
 
+import com.muhammedsafiulazam.githublister.addon.AddOn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-class QueueManager : IQueueManager {
+class QueueManager : AddOn(), IQueueManager {
 
     companion object {
         private const val TIMER_DELAY: Long = 0
@@ -71,5 +72,13 @@ class QueueManager : IQueueManager {
     override fun shutdown() {
         mTicker.cancel()
         mExecutorService?.shutdownNow()
+    }
+
+    /**
+     * Clear addons.
+     */
+    override fun clearAddOns() {
+        shutdown()
+        super.clearAddOns()
     }
 }

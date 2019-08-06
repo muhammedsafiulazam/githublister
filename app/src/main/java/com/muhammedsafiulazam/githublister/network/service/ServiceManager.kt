@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.service
 
+import com.muhammedsafiulazam.githublister.addon.AddOn
 import com.muhammedsafiulazam.githublister.network.service.contributor.ContributorService
 import com.muhammedsafiulazam.githublister.network.service.contributor.IContributorService
 import com.muhammedsafiulazam.githublister.network.service.repository.IRepositoryService
@@ -9,13 +10,17 @@ import com.muhammedsafiulazam.githublister.network.service.repository.Repository
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-class ServiceManager : IServiceManager {
+class ServiceManager : AddOn(), IServiceManager {
 
     private val mRepositoryService: IRepositoryService by lazy {
-        RepositoryService()
+        val repositoryService = RepositoryService()
+        repositoryService.addAddOns(getAddOns())
+        repositoryService
     }
     private val mContributorService: IContributorService by lazy {
-        ContributorService()
+        val contributorService = ContributorService()
+        contributorService.addAddOns(getAddOns())
+        contributorService
     }
 
     /**
@@ -32,5 +37,14 @@ class ServiceManager : IServiceManager {
      */
     override fun getContributorService(): IContributorService {
         return mContributorService
+    }
+
+    /**
+     * Clear addons.
+     */
+    override fun clearAddOns() {
+        mRepositoryService.clearAddOns()
+        mContributorService.clearAddOns()
+        super.clearAddOns()
     }
 }

@@ -1,5 +1,6 @@
 package com.muhammedsafiulazam.githublister.network.server
 
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 import com.muhammedsafiulazam.githublister.network.server.contributor.IContributorServer
 import com.muhammedsafiulazam.githublister.network.server.repository.IRepositoryServer
 
@@ -7,7 +8,7 @@ import com.muhammedsafiulazam.githublister.network.server.repository.IRepository
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IServerManager {
+interface IServerManager : IAddOn {
     /**
      * Get repository server.
      * @return repository server

@@ -1,30 +1,16 @@
 package com.muhammedsafiulazam.githublister.network.server.repository
 
-import com.muhammedsafiulazam.githublister.network.model.repository.Repository
-import com.muhammedsafiulazam.githublister.network.model.repository.Search
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.muhammedsafiulazam.githublister.addon.IAddOn
 
 /**
  * Created by Muhammed Safiul Azam on 24/07/2019.
  */
 
-interface IRepositoryServer {
-    /**
-     * Get repositories.
-     * @param since repository id
-     * @return list of repositories
-     */
-    @GET("repositories?")
-    fun getRepositories(@Query("since") since: Int?) : Call<List<Repository>>
+interface IRepositoryServer : IAddOn {
 
     /**
-     * Search repositories.
-     * @param query search query
-     * @param page pagination
-     * @return search result
+     * Get repository call.
+     * @return repository call
      */
-    @GET("search/repositories?")
-    fun searchRepositories(@Query("q") query: String?, @Query("page") page: Int?) : Call<Search>
+    fun getRepositoryCall() : IRepositoryCall
 }
