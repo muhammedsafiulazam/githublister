@@ -100,14 +100,7 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
      * @return addon for type
      */
     override fun getAddOn(type: String) : IAddOn? {
-        var addOn: IAddOn? = null
-        mAddOns.forEach { key, value ->
-            if (TextUtils.equals(key, type)) {
-                addOn = value
-                return@forEach
-            }
-        }
-        return addOn
+        return mAddOns.get(type)
     }
 
     /**
@@ -115,7 +108,7 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
      * @return map of addons
      */
     override fun getAddOns() : Map<String, IAddOn> {
-        return mAddOns.toMap()
+        return mAddOns
     }
 
     /**
