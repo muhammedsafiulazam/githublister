@@ -52,15 +52,15 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
     }
 
     override fun onPause() {
-        super.onPause()
-        mActivityModel?.onPauseActivity()
         onDeactivateActivity()
+        mActivityModel?.onPauseActivity()
+        super.onPause()
     }
 
     override fun onStop() {
-        super.onStop()
-        mActivityModel?.onStopActivity()
         onDeactivateActivity()
+        mActivityModel?.onStopActivity()
+        super.onStop()
     }
 
     fun getData() : Parcelable? {
