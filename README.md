@@ -10,9 +10,10 @@ Features:
 4. Error cases.
 
 Sources:
-1. Managers: Activity + Service + Server + Queue + Event.
-2. Coroutine + Retrofit + RecyclerView + ConstraintLayout.
-3. Events + Callbacks ( BroadcastChannel + ReceiveChannel ).
-3. UI tests + Unit tests.
+1. Architecture: MVVM + AddOn 
+2. Managers: Activity + Service + Server + Queue + Event.
+3. Coroutine + Retrofit + RecyclerView + ConstraintLayout.
+4. Events + Callbacks ( BroadcastChannel + ReceiveChannel ).
+5. UI tests + Unit tests.
 
 Thank you.
