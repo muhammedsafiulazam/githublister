@@ -42,15 +42,25 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
         }
 
         mActivityModel?.onStartActivity()
-        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
-        activityManager?.onStartActivity(this)
+        onActivateActivity()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mActivityModel?.onResumeActivity()
+        onActivateActivity()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mActivityModel?.onPauseActivity()
+        onDeactivateActivity()
     }
 
     override fun onStop() {
         super.onStop()
         mActivityModel?.onStopActivity()
-        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
-        activityManager?.onStopActivity(this)
+        onDeactivateActivity()
     }
 
     fun getData() : Parcelable? {
@@ -64,6 +74,16 @@ open class BaseActivity : AppCompatActivity(), IAddOn {
     fun setActivityModel(activityModel: Class<out BaseActivityModel>) {
         mActivityModel = ViewModelProviders.of(this).get(activityModel)
         mActivityModel?.setActivity(this)
+    }
+
+    private fun onActivateActivity() {
+        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
+        activityManager?.onStartActivity(this)
+    }
+
+    private fun onDeactivateActivity() {
+        val activityManager: IActivityManager? = getAddOn(AddOnType.ACTIVITY_MANAGER) as IActivityManager?
+        activityManager?.onStopActivity(this)
     }
 
     override fun onDestroy() {

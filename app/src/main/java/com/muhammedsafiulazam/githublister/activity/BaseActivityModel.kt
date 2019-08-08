@@ -32,6 +32,14 @@ open class BaseActivityModel : ViewModel(), IAddOn {
     open fun onStartActivity() {
     }
 
+    open fun onResumeActivity() {
+
+    }
+
+    open fun onPauseActivity() {
+
+    }
+
     open fun onStopActivity() {
     }
 
